@@ -1,5 +1,5 @@
-# ==========================================
 #  Primakara E-Journal (Custom OJS Build)
+# ==========================================
 #  PHP 7.4 + Apache + Cron + Supervisor
 # ==========================================
 FROM php:7.4-apache
@@ -43,8 +43,8 @@ RUN mkdir -p /var/www/files \
   && chown -R www-data:www-data /var/www/html /var/www/files \
   && chmod -R 775 cache public /var/www/files \
   && chmod 664 config.inc.php || true
-
 # --- Silence deprecated notices for PHP 7.x ---
+
 RUN echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_NOTICE" > /usr/local/etc/php/conf.d/error-level.ini \
   && echo "display_errors = Off" >> /usr/local/etc/php/conf.d/error-level.ini \
   && echo "log_errors = On" >> /usr/local/etc/php/conf.d/error-level.ini
@@ -53,5 +53,5 @@ EXPOSE 80
 HEALTHCHECK --interval=1m --timeout=5s CMD curl -fs http://localhost/ || exit 1
 
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
 
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
