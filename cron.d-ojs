@@ -1,0 +1,1 @@
+*/30 * * * * www-data php /var/www/html/tools/runScheduledTasks.php /var/www/html/scheduledTasks.xml >> /proc/1/fd/1 2>&1
