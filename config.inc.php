@@ -1,7 +1,17 @@
+; DO NOT DELETE THE ABOVE LINE!!!
 ; <?php exit(); // DO NOT DELETE 
   ?>
-; Environment-aware OJS config.inc.php
-; Primakara E-Journal
+; Doing so will expose this configuration file through your web site!
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; config.inc.php (Primakara E-Journal, env-aware)
+;
+; Based on default PKP OJS config. Only essential variables
+; (database, email, file paths) are environment-driven.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 <?php
 function env($key, $default = null)
@@ -11,14 +21,26 @@ function env($key, $default = null)
 }
 ?>
 
+;;;;;;;;;;;;;;;;;;;;
+; General Settings ;
+;;;;;;;;;;;;;;;;;;;;
+
 [general]
 installed = Off
 base_url = "<?php echo env('OJS_BASE_URL', 'http://localhost'); ?>"
-time_zone = "<?php echo env('OJS_TIMEZONE', 'UTC'); ?>"
-restful_urls = On
-trust_x_forwarded_for = On
+session_cookie_name = OJSSID
+scheduled_tasks = Off
+time_zone = "UTC"
+restful_urls = Off
+trust_x_forwarded_for = Off
+show_upgrade_warning = On
 enable_minified = On
 enable_beacon = On
+sitewide_privacy_statement = Off
+
+;;;;;;;;;;;;;;;;;;;;;
+; Database Settings ;
+;;;;;;;;;;;;;;;;;;;;;
 
 [database]
 driver = mysqli
@@ -28,27 +50,125 @@ password = "<?php echo env('OJS_DB_PASSWORD', 'ojs'); ?>"
 name = "<?php echo env('OJS_DB_NAME', 'ojs'); ?>"
 debug = Off
 
+;;;;;;;;;;;;;;;;;;
+; Cache Settings ;
+;;;;;;;;;;;;;;;;;;
+
+[cache]
+object_cache = none
+memcache_hostname = localhost
+memcache_port = 11211
+web_cache = Off
+web_cache_hours = 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Localization Settings ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[i18n]
+locale = en_US
+client_charset = utf-8
+connection_charset = utf8
+
+;;;;;;;;;;;;;;;;;
+; File Settings ;
+;;;;;;;;;;;;;;;;;
+
 [files]
-files_dir = "<?php echo env('OJS_FILES_DIR', '/var/www/files'); ?>"
+files_dir = "<?php echo env('OJS_FILES_DIR', 'files'); ?>"
 public_files_dir = public
+public_user_dir_size = 5000
 umask = 0022
+filename_revision_match = 70
+
+;;;;;;;;;;;;;;;;;;;;;
+; Security Settings ;
+;;;;;;;;;;;;;;;;;;;;;
 
 [security]
 force_ssl = On
+force_login_ssl = Off
 session_check_ip = On
-salt = "<?php echo env('OJS_SALT', 'YouMustSetASecretKeyHere!!'); ?>"
-api_key_secret = "<?php echo env('OJS_API_KEY_SECRET', ''); ?>"
+encryption = sha1
+salt = "YouMustSetASecretKeyHere!!"
+api_key_secret = ""
+reset_seconds = 7200
+allowed_html = "a[href|target|title],em,strong,cite,code,ul,ol,li[class],dl,dt,dd,b,i,u,img[src|alt],sup,sub,br,p"
+
+;;;;;;;;;;;;;;;;;;
+; Email Settings ;
+;;;;;;;;;;;;;;;;;;
 
 [email]
-smtp = Off
+smtp = "<?php echo env('OJS_SMTP', 'Off'); ?>"
 smtp_server = "<?php echo env('OJS_SMTP_SERVER', ''); ?>"
 smtp_port = "<?php echo env('OJS_SMTP_PORT', '587'); ?>"
 smtp_auth = "<?php echo env('OJS_SMTP_AUTH', 'tls'); ?>"
 smtp_username = "<?php echo env('OJS_SMTP_USERNAME', ''); ?>"
 smtp_password = "<?php echo env('OJS_SMTP_PASSWORD', ''); ?>"
 default_envelope_sender = "<?php echo env('OJS_MAIL_FROM', 'admin@localhost'); ?>"
+force_default_envelope_sender = Off
+time_between_emails = 3600
+max_recipients = 10
+require_validation = Off
+
+;;;;;;;;;;;;;;;;;;;
+; Search Settings ;
+;;;;;;;;;;;;;;;;;;;
+
+[search]
+min_word_length = 3
+results_per_keyword = 500
+
+;;;;;;;;;;;;;;;;
+; OAI Settings ;
+;;;;;;;;;;;;;;;;
 
 [oai]
 oai = On
+repository_id = ojs.pkp.sfu.ca
 oai_max_records = 100
-repository_id = "<?php echo env('OJS_REPOSITORY_ID', 'ojs.local'); ?>"
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Interface Settings ;
+;;;;;;;;;;;;;;;;;;;;;;
+
+[interface]
+items_per_page = 25
+page_links = 10
+
+;;;;;;;;;;;;;;;;;;;;
+; Captcha Settings ;
+;;;;;;;;;;;;;;;;;;;;
+
+[captcha]
+recaptcha = Off
+recaptcha_public_key = your_public_key
+recaptcha_private_key = your_private_key
+captcha_on_register = On
+
+;;;;;;;;;;;;;;;;;;;;;
+; External Commands ;
+;;;;;;;;;;;;;;;;;;;;;
+
+[cli]
+tar = /bin/tar
+xslt_command = ""
+
+;;;;;;;;;;;;;;;;;;
+; Proxy Settings ;
+;;;;;;;;;;;;;;;;;;
+
+[proxy]
+; http_proxy = "http://username:password@192.168.1.1:8080"
+; https_proxy = "https://username:password@192.168.1.1:8080"
+
+;;;;;;;;;;;;;;;;;;
+; Debug Settings ;
+;;;;;;;;;;;;;;;;;;
+
+[debug]
+show_stacktrace = Off
+display_errors = Off
+deprecation_warnings = Off
+log_web_service_info = Off

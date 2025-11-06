@@ -1,0 +1,39 @@
+services:
+  ojs:
+    build: .
+    container_name: ojs-ejournal
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ojs_files_data:/var/www/files
+    ports:
+      - 8989:80
+    networks:
+      - ejournal
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost/"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+
+  # Optional: Local MySQL container
+  mariadb:
+    image: mariadb:10.11
+    container_name: ojs-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ejournal
+      MYSQL_USER: ejournal
+      MYSQL_PASSWORD: root
+    volumes:
+      - ojs_db_data:/var/lib/mysql
+    networks:
+      - ejournal
+
+volumes:
+  ojs_files_data:
+  ojs_db_data:
+
+networks:
+  ejournal:
