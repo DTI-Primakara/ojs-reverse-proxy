@@ -112,4 +112,4 @@ caddy_ingress_network=coolify
 - [ ] Mekanisme upgrade
 
 
-Project ini dirawat oleh [Direktorat Teknologi Informasi Primakara University](dti.primakara.ac.id).
+Project ini dirawat oleh [Direktorat Teknologi Informasi Primakara University](https://dti.primakara.ac.id).
