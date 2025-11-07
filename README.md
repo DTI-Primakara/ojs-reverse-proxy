@@ -1,9 +1,11 @@
 # OJS dengan Reverse Proxy Support
 
 PKP OJS ([https://pkp.sfu.ca/ojs/](https://pkp.sfu.ca/ojs/))
-terkostumisasi yang dibuat khusus agar bisa berjalan di balik reverse proxy. Versi
+terkostumisasi agar dapat berjalan di balik reverse proxy. Versi
 OJS ini dibuat dengan versi 3.3 LTS yang akan mendapatkan update hingga 2027.
-Project ini dibuat untuk memudahkan proses deployment dengan Docker platform. Ideal untuk melakukan deployment dengan Coolify, Dockploy, atau Portainer atau IaaS yang mendukung container deployment.
+Project ini dibuat untuk memudahkan proses deployment dengan Docker platform. 
+Ideal untuk melakukan deployment dengan Coolify, Dockploy, atau Portainer serta 
+cloud based IaaS platform lainnya.
 
 ## Build Image
 
@@ -14,7 +16,8 @@ docker build -t ojs .
 
 ## Run Container
 
-> Apache di dalam container diset dengan HTTPS header, jika dijalankan pada localhost, akan mengasilkan redirection looping. 
+> Apache di dalam container diset dengan HTTPS header, jika dijalankan pada 
+localhost, akan mengasilkan redirection looping. 
 
 1. Sesuaikan env variable dengan `cp .env.example .env`, TLRD;:
 ```
@@ -112,4 +115,7 @@ caddy_ingress_network=coolify
 - [ ] Mekanisme upgrade
 
 
-Project ini dirawat oleh [Direktorat Teknologi Informasi Primakara University](https://dti.primakara.ac.id).
+Project ini dirawat oleh 
+[Direktorat Teknologi Informasi Primakara University](https://dti.primakara.ac.id).
+
+Butuh dukungna teknis? Hubungi kami via dti@primakara.ac.id
