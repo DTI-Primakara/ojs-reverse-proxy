@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
   unzip git libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev libicu-dev libonig-dev vim \
   libzip-dev zip locales cron supervisor curl \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
-  && docker-php-ext-install gd intl pdo pdo_mysql zip opcache mbstring xml \
+  && docker-php-ext-install gd intl pdo pdo_mysql zip opcache mbstring xml gettext  \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
