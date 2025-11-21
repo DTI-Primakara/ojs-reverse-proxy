@@ -21,6 +21,13 @@ WORKDIR /var/www/html
 # --- Copy OJS source (local) ---
 COPY . /var/www/html
 
+# --- Add entrypoint for generating final config ---
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# -- Overide default php ini
+COPY ./php.ini "$PHP_INI_DIR/php.ini"
+
 # --- Patch reverse-proxy compatibility ---
 RUN sed -i 's/function getBaseUrl()$/function getBaseUrl($allowProtocolRelative = true)/' lib/pkp/classes/core/PKPRequest.inc.php
 
@@ -52,6 +59,7 @@ RUN echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_NOTICE" > /usr/local/etc/
 EXPOSE 80
 HEALTHCHECK --interval=1m --timeout=5s CMD curl -fs http://localhost/ || exit 1
 
-
+# --- Use entrypoint to generate config before running Supervisor ---
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
