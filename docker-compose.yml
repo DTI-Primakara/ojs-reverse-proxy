@@ -7,7 +7,7 @@ services:
     volumes:
       - ojs_files_data:/var/www/files
     ports:
-      - 8989:80
+      - 8999:80
     networks:
       - ejournal
     healthcheck:
